@@ -4,3 +4,7 @@ html {
 .Mui-focused {
   color: #5F68FF !important;
 }
+
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #5F68FF !important;
+}
