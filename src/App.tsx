@@ -121,17 +121,17 @@ function App() {
           href="https://www.google.com/maps?q=ул.+Цар+Симеон+100,+София"
           target="_blank"
           rel="noopener noreferrer"
-          underline="hover"
+          underline="always"
           color="#000"
         >
           ул. Цар Симеон 100, София
         </Link>
-        <Link href="tel:+359888123456" underline="hover" color="#000">
+        <Link href="tel:+359888123456" underline="always" color="#000">
           +359 888 123 456
         </Link>
         <Link
           href="mailto:contact@thalesacademy.bgg"
-          underline="hover"
+          underline="always"
           color="#000"
         >
           contact@thalesacademy.bg
