@@ -1,10 +1,19 @@
 html {
   scroll-behavior: smooth;
 }
+
 .Mui-focused {
   color: #5F68FF !important;
 }
 
 .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
   border-color: #5F68FF !important;
+}
+
+@media screen and (min-width: 2560px) {
+  :root {
+    margin: 0px auto;
+    max-width: 1920px;
+  }
+
 }
