@@ -68,13 +68,13 @@ export default function ContactForm() {
   };
 
   const handleSelectChange = (field: keyof typeof form) => (
-  e: SelectChangeEvent
-) => {
-  setForm((prev) => ({
-    ...prev,
-    [field]: e.target.value,
-  }));
-};
+    e: SelectChangeEvent
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      [field]: e.target.value,
+    }));
+  };
 
   const handlePreferredTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
