@@ -1,3 +1,6 @@
 html {
   scroll-behavior: smooth;
 }
+.Mui-focused {
+  color: #5F68FF !important;
+}
