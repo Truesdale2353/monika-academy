@@ -80,19 +80,6 @@ const handlePreferredDaysSelect = (
   }));
 };
 
-const handlePreferredTimeChange = (
-  e: React.ChangeEvent<HTMLInputElement>
-) => {
-  const { value, checked } = e.target;
-
-  setForm((prev) => ({
-    ...prev,
-    preferredTime: checked
-      ? [...prev.preferredTime, value]
-      : prev.preferredTime.filter((v) => v !== value),
-  }));
-};
-
   return (
     <Box
       component="form"
