@@ -11,14 +11,14 @@ function App() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <header className='w-full nav-container sticky top-0 bg-white md:px-32' id='home'>
+    <div id="home"></div>
+      <header className='w-full nav-container sticky top-0 bg-white md:px-32'>
         <div className="flex justify-center py-4 md:justify-end">
           <nav>
             <ul className="flex flex-row gap-4">
               <li className='p-1 md:p-4'><a href="#home">Начало</a></li>
               <li className='p-1 md:p-4'><a href="#courses">Курсове</a></li>
-              <li className='p-1 md:p-4'><a href="#services">Екип</a></li>
-              <li className='p-1 md:p-4'><a href="#team">Цени</a></li>
+              <li className='p-1 md:p-4'><a href="#prices">Цени</a></li>
               <li className='p-1 md:p-4'><a href="#contact">Контакти</a></li>
             </ul>
           </nav>
@@ -36,6 +36,7 @@ function App() {
           </div>
           <Box className='max-w-sm' component='img' src={teacher} />
         </section>
+        <span id="courses"></span>
         <section className='flex flex-col items-center justify-between gap-10 w-full md:flex-row'>
           <div className='flex flex-col w-48 gap-4 items-center md:items-start'>
             <svg width="61" height="71" viewBox="0 0 61 71" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -69,14 +70,15 @@ function App() {
           <div className='flex flex-col gap-4 md:w-lg'>
             <Typography className='text-center text-white md:text-justify' variant="h3">За нас</Typography>
             <Typography className='text-white'> Ние сме екип от млади и опитни преподаватели - студенти по математика и информатика в Софийски университет “Св. Климент Охридски” с педагогическа подготовка. Обединява ни мотивацията да спомогнем за развитието на логическото и критичното мислене на бъдещото поколение</Typography>
-            <Button variant="contained">Запиши се</Button>
+            <Button variant="contained" onClick={() => setOpen(true)}>Запиши се</Button>
           </div>
 
           <div className='flex flex-col md:flex-row items-center gap-10'>
             <Box className='w-[256px] h-[120px] rounded-lg' component='img' src={groupOne} />
             <Box className='w-[176px] h-[196px] rounded-lg' component='img' src={groupTwo} />
-          </div>
+          </div >
         </section>
+        <span id="prices"></span>
         <section className='flex w-full items-center flex-col gap-6 md:flex-row md:flex-wrap md:gap-6 md:justify-between'>
           <div className='flex flex-col w-84 p-6 min-h-68 rounded-2xl gap-4 items-center md:items-start bg-white'>
             <Typography variant="h4">Присъствено - Индивидъално</Typography>
@@ -112,7 +114,7 @@ function App() {
           </div>
         </section>
       </div>
-      <footer className='p-6 flex flex-col items-center gap-4 md:flex-row md:justify-evenly '>
+      <footer id="contact" className='p-6 flex flex-col items-center gap-4 md:flex-row md:justify-evenly'>
         <Typography variant="h6">гр. София, бул. Витоша 104</Typography>
         <Typography variant="h6">+359 88 585 57354</Typography>
         <Typography variant="h6">contact@thalesacademy.bg</Typography>

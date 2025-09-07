@@ -45,41 +45,81 @@ const CLASSES = Array.from({ length: 8 }, (_, i) => 5 + i);
 
 export default function ContactForm() {
   const [state, handleSubmit] = useForm('meoznbjv');
-const [form, setForm] = useState<FormData>({
-  firstName: '',
-  lastName: '',
-  phone: '',
-  email: '',
-  schoolClass: '',
-  preferredDays: [],
-  preferredTime: [],
-  studyType: '',
-  message: '',
-})
+  const [form, setForm] = useState<FormData>({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    schoolClass: '',
+    preferredDays: [],
+    preferredTime: [],
+    studyType: '',
+    message: '',
+  })
 
-const handleTextChange = (field: string) => (
-  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  const handleTextChange = (field: string) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value } = e.target;
+    setForm((prev: any) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleSelectChange = (field: keyof typeof form) => (
+  e: SelectChangeEvent
 ) => {
-  const { value } = e.target;
-  setForm((prev: any) => ({
-    ...prev,
-    [field]: value,
-  }));
-};
-
-const handlePreferredDaysSelect = (
-  event: SelectChangeEvent<string[]>
-) => {
-  const {
-    target: { value },
-  } = event;
-
   setForm((prev) => ({
     ...prev,
-    preferredDays: typeof value === 'string' ? value.split(',') : value,
+    [field]: e.target.value,
   }));
 };
 
+  const handlePreferredTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      preferredTime: checked
+        ? [...prev.preferredTime, value] // ✅ add
+        : prev.preferredTime.filter((v) => v !== value), // ✅ remove
+    }));
+  };
+
+
+  const handlePreferredDaysSelect = (
+    event: SelectChangeEvent<string[]>
+  ) => {
+    const {
+      target: { value },
+    } = event;
+
+    setForm((prev) => ({
+      ...prev,
+      preferredDays: typeof value === 'string' ? value.split(',') : value,
+    }));
+  };
+
+  const handleStudyTypeChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      studyType: value,
+    }));
+  };
+
+
+  if (state.succeeded) {
+    return (
+      <div className="p-6 text-center bg-green-100 text-green-800 rounded-md shadow">
+        ✅ Успешно изпратено! Благодарим ви за интереса. Ще се свържем с вас скоро.
+      </div>
+    );
+  }
   return (
     <Box
       component="form"
@@ -136,6 +176,7 @@ const handlePreferredDaysSelect = (
           <Select
             name="schoolClass"
             value={form.schoolClass}
+            onChange={handleSelectChange('schoolClass')}
             label="Клас"
           >
             {CLASSES.map((cls) => (
@@ -180,7 +221,7 @@ const handlePreferredDaysSelect = (
             row
             name="studyType"
             value={form.studyType}
-            onChange={handleTextChange('studyType')}
+            onChange={handleStudyTypeChange}
           >
             <FormControlLabel value="група" control={<Radio />} label="Група" />
             <FormControlLabel value="индивидуално" control={<Radio />} label="Индивидуално" />
@@ -190,24 +231,26 @@ const handlePreferredDaysSelect = (
 
         <FormControl fullWidth>
           <FormLabel>Предпочитано време</FormLabel>
+
           <FormControlLabel
             control={
               <Checkbox
                 name="preferredTime[]"
                 value="сутрин"
                 checked={form.preferredTime.includes('сутрин')}
-                onChange={handleTextChange('preferredTime')}
+                onChange={handlePreferredTimeChange}
               />
             }
             label="Сутрин"
           />
+
           <FormControlLabel
             control={
               <Checkbox
                 name="preferredTime[]"
                 value="следобяд"
                 checked={form.preferredTime.includes('следобяд')}
-                onChange={handleTextChange('preferredTime')}
+                onChange={handlePreferredTimeChange}
               />
             }
             label="Следобед"
