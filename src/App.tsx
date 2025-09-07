@@ -130,7 +130,7 @@ function App() {
           +359 88 585 5735
         </Link>
         <Link
-          href="mailto:contact@thalesacademy.bgg"
+          href="mailto:contact@thalesacademy.bg"
           underline="always"
           color="#000"
         >
