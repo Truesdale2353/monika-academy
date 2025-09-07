@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, Typography } from '@mui/material';
 import './App.css'
 import ContactForm from './contact-form/contactForm';
 import teacher from './assets/teacher.svg'
