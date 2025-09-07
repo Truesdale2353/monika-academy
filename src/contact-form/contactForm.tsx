@@ -17,7 +17,8 @@ import {
 } from "@mui/material";
 import { useForm, ValidationError } from '@formspree/react';
 import { useState } from "react";
-import { useAutoScrollOnFocus } from "../hooks/useAutoScrollOnFocus";
+import useAutoScrollOnFocus from "../hooks/useAutoScrollOnFocus";
+
 
 const DAYS = [
   "Понеделник",
