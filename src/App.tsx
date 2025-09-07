@@ -126,8 +126,8 @@ function App() {
         >
           ул. Цар Симеон 100, София
         </Link>
-        <Link href="tel:+359888123456" underline="always" color="#000">
-          +359 888 123 456
+        <Link href="tel:+359885855735" underline="always" color="#000">
+          +359 88 585 5735
         </Link>
         <Link
           href="mailto:contact@thalesacademy.bgg"
