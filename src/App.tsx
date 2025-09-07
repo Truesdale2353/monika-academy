@@ -122,14 +122,21 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
           underline="hover"
-          color="primary"
+          color="#000"
         >
           ул. Цар Симеон 100, София
         </Link>
-        <Link href="tel:+359888123456" underline="hover" color="primary">
+        <Link href="tel:+359888123456" underline="hover" color="#000">
           +359 888 123 456
         </Link>
-        <Typography variant="h6">contact@thalesacademy.bg</Typography>
+        <Link
+          href="mailto:contact@thalesacademy.bgg"
+          underline="hover"
+          color="#000"
+        >
+          contact@thalesacademy.bg
+        </Link>
+
       </footer>
 
       <Dialog open={open} onClose={() => setOpen(false)} maxWidth="md" fullWidth>
