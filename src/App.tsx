@@ -33,7 +33,7 @@ function App() {
           <div className='flex flex-col w-48 gap-4 items-center md:items-start'>
             <Typography className='text-center md:text-justify' variant="h3">Овладей Математиката с Увереност</Typography>
             <Typography className='text-center md:text-justify'> Курсове и индивидуални уроци за 5–12 клас</Typography>
-            <Button variant="contained" onClick={() => setOpen(true)}>Запиши се</Button>
+            <Button variant="contained" onClick={() => setOpen(true)}>ЗАПИШИ СЕ</Button>
           </div>
           <Box className='max-w-sm' component='img' src={teacher} />
         </section>
@@ -71,7 +71,7 @@ function App() {
           <div className='flex flex-col gap-8 md:w-lg'>
             <Typography className='text-center text-white md:text-justify' variant="h3">За нас</Typography>
             <Typography className='text-white'> Ние сме екип от млади и опитни преподаватели - студенти по математика и информатика в Софийски университет “Св. Климент Охридски” с педагогическа подготовка. Обединява ни мотивацията да спомогнем за развитието на логическото и критичното мислене на бъдещото поколение</Typography>
-            <Button variant="contained" onClick={() => setOpen(true)}>Запиши се</Button>
+            <Button className="max-w-40"variant="contained" onClick={() => setOpen(true)}> ЗАПИШИ СЕ</Button>
           </div>
 
           <div className='flex flex-col md:flex-row items-center gap-10'>
@@ -141,7 +141,13 @@ function App() {
 
       <Dialog open={open} onClose={() => setOpen(false)} maxWidth="md" fullWidth>
         <DialogActions>
-          <Button onClick={() => setOpen(false)}>X</Button>
+          <Button sx={{
+            color: 'black',
+            backgroundColor: 'white',
+            '&:hover': {
+              backgroundColor: 'lightgrey',
+            },
+          }} onClick={() => setOpen(false)}>X</Button>
         </DialogActions>
         <DialogContent >
           <ContactForm />
