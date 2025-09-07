@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <div id="home"></div>
-      <header className='w-full nav-container sticky top-0 bg-white md:px-32'>
+      <header className='w-full nav-container sticky top-0 z-40 bg-white md:px-32'>
         <div className="flex justify-center py-4 md:justify-end">
           <nav>
             <ul className="flex flex-row gap-4">
