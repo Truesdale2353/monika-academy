@@ -2,8 +2,6 @@ import * as React from "react";
 import {
   Box,
   Button,
-  Card,
-  CardContent,
   Checkbox,
   Chip,
   FormControl,
@@ -15,8 +13,10 @@ import {
   RadioGroup,
   Select,
   TextField,
+  type SelectChangeEvent,
 } from "@mui/material";
 import { useForm, ValidationError } from '@formspree/react';
+import { useState } from "react";
 
 const DAYS = [
   "Понеделник",
@@ -28,33 +28,70 @@ const DAYS = [
   "Неделя",
 ];
 
+type FormData = {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  schoolClass: string;
+  preferredDays: string[];
+  preferredTime: string[];
+  studyType: string;
+  message: string;
+};
+
 const CLASSES = Array.from({ length: 8 }, (_, i) => 5 + i);
 
 
 export default function ContactForm() {
   const [state, handleSubmit] = useForm('meoznbjv');
-  const [form, setForm] = React.useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    schoolClass: "",
-    preferredDays: [],
-    studyType: "група",
-    isPrivate: false,
-    preferredTime: "сутрин",
-    message: "",
-  });
+const [form, setForm] = useState<FormData>({
+  firstName: '',
+  lastName: '',
+  phone: '',
+  email: '',
+  schoolClass: '',
+  preferredDays: [],
+  preferredTime: [],
+  studyType: '',
+  message: '',
+})
 
-  const handleChange = (field: string) => (event: { target: { checked: any; value: any; }; }) => {
-    const value =
-      field === "isPrivate"
-        ? event.target.checked
-        : field === "preferredDays"
-          ? event.target.value
-          : event.target.value;
-    setForm((prev) => ({ ...prev, [field]: value }));
-  };
+const handleTextChange = (field: string) => (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+) => {
+  const { value } = e.target;
+  setForm((prev: any) => ({
+    ...prev,
+    [field]: value,
+  }));
+};
+
+const handlePreferredDaysSelect = (
+  event: SelectChangeEvent<string[]>
+) => {
+  const {
+    target: { value },
+  } = event;
+
+  setForm((prev) => ({
+    ...prev,
+    preferredDays: typeof value === 'string' ? value.split(',') : value,
+  }));
+};
+
+const handlePreferredTimeChange = (
+  e: React.ChangeEvent<HTMLInputElement>
+) => {
+  const { value, checked } = e.target;
+
+  setForm((prev) => ({
+    ...prev,
+    preferredTime: checked
+      ? [...prev.preferredTime, value]
+      : prev.preferredTime.filter((v) => v !== value),
+  }));
+};
 
   return (
     <Box
@@ -69,7 +106,7 @@ export default function ContactForm() {
           label="Име"
           name="firstName"
           value={form.firstName}
-          onChange={handleChange('firstName')}
+          onChange={handleTextChange('firstName')}
         />
         <ValidationError field="firstName" prefix="Име" errors={state.errors} />
 
@@ -78,7 +115,7 @@ export default function ContactForm() {
           label="Фамилия"
           name="lastName"
           value={form.lastName}
-          onChange={handleChange('lastName')}
+          onChange={handleTextChange('lastName')}
         />
         <ValidationError field="lastName" prefix="Фамилия" errors={state.errors} />
       </div>
@@ -90,7 +127,7 @@ export default function ContactForm() {
           label="Телефон"
           name="phone"
           value={form.phone}
-          onChange={handleChange('phone')}
+          onChange={handleTextChange('phone')}
         />
         <ValidationError field="phone" prefix="Телефон" errors={state.errors} />
 
@@ -100,7 +137,7 @@ export default function ContactForm() {
           name="email"
           type="email"
           value={form.email}
-          onChange={handleChange('email')}
+          onChange={handleTextChange('email')}
         />
         <ValidationError field="email" prefix="Имейл" errors={state.errors} />
       </div>
@@ -112,7 +149,6 @@ export default function ContactForm() {
           <Select
             name="schoolClass"
             value={form.schoolClass}
-            onChange={handleChange('schoolClass')}
             label="Клас"
           >
             {CLASSES.map((cls) => (
@@ -130,10 +166,10 @@ export default function ContactForm() {
             multiple
             name="preferredDays[]"
             value={form.preferredDays}
-            onChange={handleChange('preferredDays')}
+            onChange={handlePreferredDaysSelect}
             renderValue={(selected) => (
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                {selected.map((value) => (
+                {selected.map((value: any) => (
                   <Chip key={value} label={value} />
                 ))}
               </Box>
@@ -157,7 +193,7 @@ export default function ContactForm() {
             row
             name="studyType"
             value={form.studyType}
-            onChange={handleChange('studyType')}
+            onChange={handleTextChange('studyType')}
           >
             <FormControlLabel value="група" control={<Radio />} label="Група" />
             <FormControlLabel value="индивидуално" control={<Radio />} label="Индивидуално" />
@@ -173,7 +209,7 @@ export default function ContactForm() {
                 name="preferredTime[]"
                 value="сутрин"
                 checked={form.preferredTime.includes('сутрин')}
-                onChange={handleChange('preferredTime')}
+                onChange={handleTextChange('preferredTime')}
               />
             }
             label="Сутрин"
@@ -184,7 +220,7 @@ export default function ContactForm() {
                 name="preferredTime[]"
                 value="следобяд"
                 checked={form.preferredTime.includes('следобяд')}
-                onChange={handleChange('preferredTime')}
+                onChange={handleTextChange('preferredTime')}
               />
             }
             label="Следобед"
@@ -201,7 +237,7 @@ export default function ContactForm() {
         multiline
         minRows={4}
         value={form.message}
-        onChange={handleChange('message')}
+        onChange={handleTextChange('message')}
       />
       <ValidationError field="message" prefix="Съобщение" errors={state.errors} />
 
