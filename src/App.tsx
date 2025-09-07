@@ -5,13 +5,14 @@ import teacher from './assets/teacher.svg'
 import groupOne from './assets/groupOne.jpg'
 import groupTwo from './assets/groupTwo.jpg'
 import { useState } from 'react';
+import Link from '@mui/material/Link';
 
 
 function App() {
   const [open, setOpen] = useState(false);
   return (
     <>
-    <div id="home"></div>
+      <div id="home"></div>
       <header className='w-full nav-container sticky top-0 bg-white md:px-32'>
         <div className="flex justify-center py-4 md:justify-end">
           <nav>
@@ -76,7 +77,7 @@ function App() {
           <div className='flex flex-col md:flex-row items-center gap-10'>
             <Box className='w-[256px] h-[120px] rounded-lg' component='img' src={groupOne} />
             <Box className='w-[176px] h-[196px] rounded-lg' component='img' src={groupTwo} />
-             <span id="prices"></span>
+            <span id="prices"></span>
           </div >
         </section>
 
@@ -116,8 +117,18 @@ function App() {
         </section>
       </div>
       <footer id="contact" className='p-6 flex flex-col items-center gap-4 md:flex-row md:justify-evenly'>
-        <Typography variant="h6">гр. София, бул. Витоша 104</Typography>
-        <Typography variant="h6">+359 88 585 57354</Typography>
+        <Link
+          href="https://www.google.com/maps?q=ул.+Цар+Симеон+100,+София"
+          target="_blank"
+          rel="noopener noreferrer"
+          underline="hover"
+          color="primary"
+        >
+          ул. Цар Симеон 100, София
+        </Link>
+        <Link href="tel:+359888123456" underline="hover" color="primary">
+          +359 888 123 456
+        </Link>
         <Typography variant="h6">contact@thalesacademy.bg</Typography>
       </footer>
 
