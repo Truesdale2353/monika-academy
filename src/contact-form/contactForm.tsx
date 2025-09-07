@@ -17,7 +17,6 @@ import {
 } from "@mui/material";
 import { useForm, ValidationError } from '@formspree/react';
 import { useState } from "react";
-import useAutoScrollOnFocus from "../hooks/useAutoScrollOnFocus";
 
 
 const DAYS = [
@@ -47,7 +46,6 @@ const CLASSES = Array.from({ length: 8 }, (_, i) => 5 + i);
 
 export default function ContactForm() {
   const [state, handleSubmit] = useForm('meoznbjv');
-  const [emailRef, handleEmailFocus] = useAutoScrollOnFocus<HTMLInputElement>();
   const [form, setForm] = useState<FormData>({
     firstName: '',
     lastName: '',
@@ -132,8 +130,6 @@ export default function ContactForm() {
       {/* Row 1: Име + Фамилия */}
       <div className="flex flex-col gap-4 md:flex-row">
         <TextField
-          inputRef={emailRef}
-          onFocus={handleEmailFocus}
           fullWidth
           label="Име"
           name="firstName"
@@ -143,8 +139,6 @@ export default function ContactForm() {
         <ValidationError field="firstName" prefix="Име" errors={state.errors} />
 
         <TextField
-          inputRef={emailRef}
-          onFocus={handleEmailFocus}
           fullWidth
           label="Фамилия"
           name="lastName"
@@ -157,8 +151,6 @@ export default function ContactForm() {
       {/* Row 2: Телефон + Имейл */}
       <div className="flex flex-col gap-4 md:flex-row">
         <TextField
-          inputRef={emailRef}
-          onFocus={handleEmailFocus}
           fullWidth
           label="Телефон"
           name="phone"
@@ -168,8 +160,6 @@ export default function ContactForm() {
         <ValidationError field="phone" prefix="Телефон" errors={state.errors} />
 
         <TextField
-          inputRef={emailRef}
-          onFocus={handleEmailFocus}
           fullWidth
           label="Електронна поща"
           name="email"
@@ -185,8 +175,6 @@ export default function ContactForm() {
         <FormControl fullWidth>
           <InputLabel>Клас</InputLabel>
           <Select
-            inputRef={emailRef}
-            onFocus={handleEmailFocus}
             name="schoolClass"
             value={form.schoolClass}
             onChange={handleSelectChange('schoolClass')}
@@ -204,8 +192,6 @@ export default function ContactForm() {
         <FormControl fullWidth>
           <InputLabel>Предпочитани дни</InputLabel>
           <Select
-            inputRef={emailRef}
-            onFocus={handleEmailFocus}
             multiple
             name="preferredDays[]"
             value={form.preferredDays}
@@ -278,8 +264,6 @@ export default function ContactForm() {
       {/* Message */}
       <TextField
         fullWidth
-        inputRef={emailRef}
-        onFocus={handleEmailFocus}
         name="message"
         label="Съобщение"
         multiline
