@@ -68,7 +68,7 @@ function App() {
       </div>
       <div className="flex flex-col bg-[#27323D] gap-4 p-10 items-center md:px-32 mt-6">
         <section className='w-full flex flex-col gap-6 py-10 justify-center items-center md:flex-row md:justify-between'>
-          <div className='flex flex-col gap-8 md:w-lg'>
+          <div className='flex flex-col gap-8 md:w-lg items-center md:items-start'>
             <Typography className='text-center text-white md:text-justify' variant="h3">За нас</Typography>
             <Typography className='text-white'> Ние сме екип от млади и опитни преподаватели - студенти по математика и информатика в Софийски университет “Св. Климент Охридски” с педагогическа подготовка. Обединява ни мотивацията да спомогнем за развитието на логическото и критичното мислене на бъдещото поколение</Typography>
             <Button className="max-w-40"variant="contained" onClick={() => setOpen(true)}> ЗАПИШИ СЕ</Button>
