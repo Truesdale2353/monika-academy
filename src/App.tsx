@@ -70,8 +70,8 @@ function App() {
         <section className='w-full flex flex-col gap-6 py-10 justify-center items-center md:flex-row md:justify-between'>
           <div className='flex flex-col gap-8 md:w-lg items-center md:items-start'>
             <Typography className='text-center text-white md:text-justify' variant="h3">За нас</Typography>
-            <Typography className='text-white'> Ние сме екип от млади и опитни преподаватели - студенти по математика и информатика в Софийски университет “Св. Климент Охридски” с педагогическа подготовка. Обединява ни мотивацията да спомогнем за развитието на логическото и критичното мислене на бъдещото поколение</Typography>
-            <Button className="max-w-40"variant="contained" onClick={() => setOpen(true)}> ЗАПИШИ СЕ</Button>
+            <Typography className='text-white'> Ние сме екип от млади и опитни преподаватели - студенти по математика и информатика в Софийски университет “Св. Климент Охридски” с педагогическа подготовка. Обединява ни мотивацията да спомогнем за развитието на логическото и критичното мислене на бъдещото поколение.</Typography>
+            <Button className="max-w-40" variant="contained" onClick={() => setOpen(true)}> ЗАПИШИ СЕ</Button>
           </div>
 
           <div className='flex flex-col md:flex-row items-center gap-10'>
@@ -83,15 +83,7 @@ function App() {
 
         <section className='flex w-full items-center flex-col gap-6 md:flex-row md:flex-wrap md:gap-6 md:justify-between'>
           <div className='flex flex-col w-84 p-6 min-h-68 rounded-2xl gap-4 items-center md:items-start bg-white'>
-            <Typography className='text-center md:text-start' variant="h4">Присъствено - Индивидъално</Typography>
-            <Typography className='text-center md:text-start' sx={{ color: '#5F68FF' }} variant="h4">70 лв / 35.78 €</Typography>
-            <ul className="list-disc ml-6">
-              <li>Продължителност 1 ч. 30 мин.</li>
-              <li>Месечна такса (4 занятия) 280 лв / 143.13 €</li>
-            </ul>
-          </div>
-          <div className='flex flex-col w-84 p-6 min-h-68 rounded-2xl gap-4 items-center md:items-start bg-white'>
-            <Typography className='text-center md:text-start' variant="h4">Присъствено - Групово (2 – 6 уч.)</Typography>
+            <Typography className='text-center md:text-start' variant="h4">Присъствено - Групово (2 – 6 ученици)</Typography>
             <Typography className='text-center md:text-start' sx={{ color: '#5F68FF' }} variant="h4">40 лв / 20.47 €</Typography>
             <ul className="list-disc ml-6">
               <li>Продължителност 1 ч. 30 мин.</li>
@@ -99,11 +91,11 @@ function App() {
             </ul>
           </div>
           <div className='flex flex-col w-84 p-6 min-h-68 rounded-2xl gap-4 items-center md:items-start bg-white'>
-            <Typography className='text-center md:text-start' variant="h4">Онлайн – Индивидуално</Typography>
-            <Typography className='text-center md:text-start' sx={{ color: '#5F68FF' }} variant="h4">50 лв / 25.59 €</Typography>
+            <Typography className='text-center md:text-start' variant="h4">Присъствено - Индивидъално</Typography>
+            <Typography className='text-center md:text-start' sx={{ color: '#5F68FF' }} variant="h4">70 лв / 35.78 €</Typography>
             <ul className="list-disc ml-6">
               <li>Продължителност 1 ч. 30 мин.</li>
-              <li>Месечна такса (4 занятия) 200 лв / 102.36 €</li>
+              <li>Месечна такса (4 занятия) 280 лв / 143.13 €</li>
             </ul>
           </div>
           <div className='flex flex-col w-84 bg-zinc-100 min-h-68 p-6 rounded-2xl gap-4 items-center md:items-start bg-white'>
@@ -112,6 +104,14 @@ function App() {
             <ul className="list-disc ml-6">
               <li>Продължителност 1 ч. 30 мин.</li>
               <li>Месечна такса (4 занятия) 120 лв / 61.36 €</li>
+            </ul>
+          </div>
+          <div className='flex flex-col w-84 p-6 min-h-68 rounded-2xl gap-4 items-center md:items-start bg-white'>
+            <Typography className='text-center md:text-start' variant="h4">Онлайн – Индивидуално</Typography>
+            <Typography className='text-center md:text-start' sx={{ color: '#5F68FF' }} variant="h4">50 лв / 25.59 €</Typography>
+            <ul className="list-disc ml-6">
+              <li>Продължителност 1 ч. 30 мин.</li>
+              <li>Месечна такса (4 занятия) 200 лв / 102.36 €</li>
             </ul>
           </div>
         </section>
