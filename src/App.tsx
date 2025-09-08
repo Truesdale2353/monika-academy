@@ -118,13 +118,13 @@ function App() {
       </div>
       <footer id="contact" className='p-6 flex flex-col items-center gap-4 md:flex-row md:justify-evenly'>
         <Link
-          href="https://www.google.com/maps?q=ул.+Цар+Симеон+100,+София"
+          href="https://www.google.com/maps?q=Бул.+Витоша+104,+София"
           target="_blank"
           rel="noopener noreferrer"
           underline="always"
           color="#000"
         >
-          ул. Цар Симеон 100, София
+          Бул. Витоша 104, София
         </Link>
         <Link href="tel:+359885855735" underline="always" color="#000">
           +359 88 585 5735
