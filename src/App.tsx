@@ -91,7 +91,7 @@ function App() {
             </ul>
           </div>
           <div className='flex flex-col w-84 p-6 min-h-68 rounded-2xl gap-4 items-center md:items-start bg-white'>
-            <Typography className='text-center md:text-start' variant="h4">Присъствено - Индивидъално</Typography>
+            <Typography className='text-center md:text-start' variant="h4">Присъствено - Индивидуално</Typography>
             <Typography className='text-center md:text-start' sx={{ color: '#5F68FF' }} variant="h4">70 лв / 35.78 €</Typography>
             <ul className="list-disc ml-6">
               <li>Продължителност 1 ч. 30 мин.</li>
