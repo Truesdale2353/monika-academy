@@ -32,7 +32,7 @@ function App() {
         <section className='flex flex-col gap-6 items-center justify-center w-full md:flex-row md:justify-between md:items-start'>
           <div className='flex flex-col w-48 gap-4 items-center md:items-start'>
             <Typography className='text-center md:text-justify' variant="h3">Овладей Математиката с Увереност</Typography>
-            <Typography className='text-center md:text-justify'> Курсове и индивидуални уроци за 5–12 клас</Typography>
+            <Typography className='text-center md:text-justify'> Курсове и индивидуални уроци за 1–12 клас</Typography>
             <Button variant="contained" onClick={() => setOpen(true)}>ЗАПИШИ СЕ</Button>
           </div>
           <Box className='max-w-sm' component='img' src={teacher} />
@@ -61,8 +61,7 @@ function App() {
             </svg>
 
             <Typography variant="h6">НВО, ДЗИ и Прием</Typography>
-            <Typography variant="body1" className='text-center md:text-justify'> НВО, ДЗИ и Прием
-              Подготовка за НВО, ДЗИ и прием в елитни гимназии</Typography>
+            <Typography variant="body1" className='text-center md:text-justify'>Подготовка за НВО, ДЗИ и прием в елитни гимназии</Typography>
           </div>
         </section>
       </div>
