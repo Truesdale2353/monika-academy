@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, Typography } from '@mui/material';
 import './App.css'
 import ContactForm from './contact-form/contactForm';
-import teacher from './assets/teacher.svg'
+import teacher from './assets/teacher.jpg'
 import groupOne from './assets/groupOne.jpg'
 import groupTwo from './assets/groupTwo.jpg'
 import { useState } from 'react';
@@ -35,7 +35,7 @@ function App() {
             <Typography className='text-center md:text-justify'> Курсове и индивидуални уроци за 1–12 клас</Typography>
             <Button variant="contained" onClick={() => setOpen(true)}>ЗАПИШИ СЕ</Button>
           </div>
-          <Box className='max-w-sm' component='img' src={teacher} />
+          <Box className='max-w-sm rounded-full' component='img' src={teacher} />
         </section>
         <span id="courses"></span>
         <section className='flex flex-col items-center justify-between gap-10 w-full md:flex-row'>
@@ -74,7 +74,7 @@ function App() {
           </div>
 
           <div className='flex flex-col md:flex-row items-center gap-10'>
-            <Box className='w-[256px] h-[120px] rounded-lg' component='img' src={groupOne} />
+            <Box className='w-[256px] h-[160px] rounded-lg' component='img' src={groupOne} />
             <Box className='w-[176px] h-[196px] rounded-lg' component='img' src={groupTwo} />
             <span id="prices"></span>
           </div >
