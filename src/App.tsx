@@ -6,6 +6,7 @@ import groupOne from './assets/groupOne.jpg'
 import groupTwo from './assets/groupTwo.jpg'
 import { useState } from 'react';
 import Link from '@mui/material/Link';
+import {BottomSticky} from './components/BottomSticky';
 
 
 function App() {
@@ -115,6 +116,11 @@ function App() {
           </div>
         </section>
       </div>
+            <BottomSticky>
+        <p className="text-sm">
+          👋 При предплащане на 3 месеца получавате 10% отстъпка от съответната цена!
+        </p>
+      </BottomSticky>
       <footer id="contact" className='p-6 flex flex-col items-center gap-4 md:flex-row md:justify-evenly'>
         <Link
           href="https://www.google.com/maps?q=Бул.+Витоша+104,+София"
