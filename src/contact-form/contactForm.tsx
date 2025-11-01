@@ -38,6 +38,7 @@ type FormData = {
   preferredDays: string[];
   preferredTime: string[];
   studyType: string;
+  place: string;
   message: string;
 };
 
@@ -55,6 +56,7 @@ export default function ContactForm() {
     preferredDays: [],
     preferredTime: [],
     studyType: '',
+    place: '',
     message: '',
   })
 
@@ -110,6 +112,18 @@ export default function ContactForm() {
     setForm((prev) => ({
       ...prev,
       studyType: value,
+    }));
+  };
+
+  
+  const handlePlaceChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      place: value,
     }));
   };
 
@@ -229,6 +243,21 @@ export default function ContactForm() {
           </RadioGroup>
         </FormControl>
         <ValidationError field="studyType" prefix="Форма" errors={state.errors} />
+
+          <FormControl fullWidth>
+          <FormLabel>Място на провеждане</FormLabel>
+          <RadioGroup
+            row
+            name="place"
+            value={form.place}
+            onChange={handlePlaceChange}
+          >
+            <FormControlLabel value="онлайн" control={<Radio />} label="Онлайн" />
+            <FormControlLabel value="присъствено" control={<Radio />} label="Присъствено" />
+          </RadioGroup>
+        </FormControl>
+        <ValidationError field="place" prefix="Форма" errors={state.errors} />
+        
 
         <FormControl fullWidth>
           <FormLabel>Предпочитано време</FormLabel>
