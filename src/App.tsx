@@ -84,41 +84,41 @@ function App() {
         <section className='flex w-full items-center flex-col gap-6 md:flex-row md:flex-wrap md:gap-6 md:justify-between'>
           <div className='flex flex-col w-84 p-6 min-h-68 rounded-2xl gap-4 items-center md:items-start bg-white'>
             <Typography className='text-center md:text-start' variant="h4">Присъствено - Групово (2 – 6 ученици)</Typography>
-            <Typography className='text-center md:text-start' sx={{ color: '#5F68FF' }} variant="h4">40 лв / 20.47 €</Typography>
+            <Typography className='text-center md:text-start' sx={{ color: '#5F68FF' }} variant="h4">20 евро/ 39,11лв</Typography>
             <ul className="list-disc ml-6">
               <li>Продължителност 1 ч. 30 мин.</li>
-              <li>Месечна такса (4 занятия) 160 лв / 81.81 €</li>
+              <li>4 занятия 80 евро / 156,47 лв</li>
             </ul>
           </div>
           <div className='flex flex-col w-84 p-6 min-h-68 rounded-2xl gap-4 items-center md:items-start bg-white'>
             <Typography className='text-center md:text-start' variant="h4">Присъствено - Индивидуално</Typography>
-            <Typography className='text-center md:text-start' sx={{ color: '#5F68FF' }} variant="h4">70 лв / 35.78 €</Typography>
+            <Typography className='text-center md:text-start' sx={{ color: '#5F68FF' }} variant="h4">35 евро / 68,45лв</Typography>
             <ul className="list-disc ml-6">
               <li>Продължителност 1 ч. 30 мин.</li>
-              <li>Месечна такса (4 занятия) 280 лв / 143.13 €</li>
+              <li>4 занятия 140 евро / 273,82</li>
             </ul>
           </div>
           <div className='flex flex-col w-84 bg-zinc-100 min-h-68 p-6 rounded-2xl gap-4 items-center md:items-start bg-white'>
             <Typography className='text-center md:text-start' variant="h4">Онлайн – Групово</Typography>
-            <Typography className='text-center md:text-start' sx={{ color: '#5F68FF' }} variant="h4">30 лв / 15.34 €</Typography>
+            <Typography className='text-center md:text-start' sx={{ color: '#5F68FF' }} variant="h4">15 евро / 29,34лв</Typography>
             <ul className="list-disc ml-6">
               <li>Продължителност 1 ч. 30 мин.</li>
-              <li>Месечна такса (4 занятия) 120 лв / 61.36 €</li>
+              <li>4 занятия 60 евро / 117,45 лв</li>
             </ul>
           </div>
           <div className='flex flex-col w-84 p-6 min-h-68 rounded-2xl gap-4 items-center md:items-start bg-white'>
             <Typography className='text-center md:text-start' variant="h4">Онлайн – Индивидуално</Typography>
-            <Typography className='text-center md:text-start' sx={{ color: '#5F68FF' }} variant="h4">50 лв / 25.59 €</Typography>
+            <Typography className='text-center md:text-start' sx={{ color: '#5F68FF' }} variant="h4">25 евро/ 48,89лв</Typography>
             <ul className="list-disc ml-6">
               <li>Продължителност 1 ч. 30 мин.</li>
-              <li>Месечна такса (4 занятия) 200 лв / 102.36 €</li>
+              <li>4 занятия 100 евро / 195,58 лв</li>
             </ul>
           </div>
         </section>
       </div>
             <BottomSticky>
         <p className="text-sm">
-          👋 При предплащане на 3 месеца получавате 10% отстъпка от съответната цена!
+          👋 При предплащане на 12 занятия получавате 10% отстъпка от съответната цена!
         </p>
       </BottomSticky>
       <footer id="contact" className='p-6 flex flex-col items-center gap-4 md:flex-row md:justify-evenly'>

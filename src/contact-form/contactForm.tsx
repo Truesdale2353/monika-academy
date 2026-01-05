@@ -42,7 +42,7 @@ type FormData = {
   message: string;
 };
 
-const CLASSES = Array.from({ length: 8 }, (_, i) => 5 + i);
+const CLASSES = Array.from({ length: 12 }, (_, i) => 1 + i);
 
 
 export default function ContactForm() {
