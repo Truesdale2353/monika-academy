@@ -117,9 +117,12 @@ function App() {
         </section>
       </div>
           <BottomSticky>
-        <p className="text-sm" onClick={() => setOpen(true)}>
-          👋<b>Пробна матура по математика</b> 30 май | 10:00 ч. бул. „Витоша“ 104 Реална изпитна среда, подробен анализ, обратна връзка и насоки за по-висок резултат. 👉 Запиши се сега!
+        <p onClick={() => setOpen(true)}>
+          👋<b>Пробна матура по математика</b> 
         </p>
+        <p className="text-sm">30 май | 10:00 ч. бул. „Витоша“ 104</p>
+         <p className="text-sm">Реална изпитна среда, подробен анализ, обратна връзка и насоки за по-висок резултат.</p>
+         <p className="text-sm">👉 Запиши се сега!</p>
       </BottomSticky>
       <footer id="contact" className='p-6 flex flex-col items-center gap-4 md:flex-row md:justify-evenly'>
         <Link
