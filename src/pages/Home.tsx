@@ -93,7 +93,7 @@ function Home() {
         >
           contact@thalesacademy.bg
         </Link>
-        <Link href="/general-conditions" color="#000">Общи условия</Link>
+        <Link href="#/general-conditions" color="#000">Общи условия</Link>
       </footer>
 
       <Dialog open={open} onClose={() => setOpen(false)} maxWidth="md" fullWidth>
