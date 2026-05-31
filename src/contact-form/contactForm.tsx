@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   Box,
   Button,
@@ -17,7 +16,58 @@ import {
   type SelectChangeEvent,
 } from "@mui/material";
 import { useForm } from "@formspree/react";
-import { useMemo, useState } from "react";
+import {
+  useMemo,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from "react";
+import { Link } from "react-router";
+
+type FormData = {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  schoolClass: string;
+  course: string;
+  preferredDays: string[];
+  preferredTime: string[];
+  studyType: string;
+  place: string;
+  message: string;
+  termsAccepted: boolean;
+};
+
+type FieldName = keyof FormData;
+type TextFieldName = "firstName" | "lastName" | "phone" | "email" | "message";
+type RadioFieldName = "studyType" | "place";
+
+type Errors = Partial<Record<FieldName, string>>;
+type Touched = Partial<Record<FieldName, boolean>>;
+
+type Option = {
+  label: string;
+  value: string;
+};
+
+type TextFieldConfig = {
+  name: TextFieldName;
+  label: string;
+  type?: string;
+  multiline?: boolean;
+  minRows?: number;
+};
+
+type RadioGroupConfig = {
+  name: RadioFieldName;
+  label: string;
+  options: Option[];
+};
+
+const FORMSPREE_FORM_ID = "meoznbjv";
+
+const REQUIRED_FIELD_MESSAGE = "Полето е задължително.";
 
 const DAYS = [
   "Понеделник",
@@ -29,194 +79,372 @@ const DAYS = [
   "Неделя",
 ];
 
-type FormData = {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
-  schoolClass: string;
-  preferredDays: string[];
-  preferredTime: string[];
-  studyType: string;
-  place: string;
-  message: string;
+const CLASSES = Array.from({ length: 12 }, (_, index) => String(index + 1));
+
+const COURSE_OPTIONS: Option[] = [
+  {
+    label: "За бъдещи 7. клас — Група 1",
+    value: "За бъдещи 7. клас — Група 1",
+  },
+  {
+    label: "За бъдещи 7. клас — Група 2",
+    value: "За бъдещи 7. клас — Група 2",
+  },
+  {
+    label: "За бъдещи 4. клас",
+    value: "За бъдещи 4. клас",
+  },
+  {
+    label: "За бъдещи 6. клас",
+    value: "За бъдещи 6. клас",
+  },
+  {
+    label: "За бъдещи 12. клас — Общообразователна подготовка",
+    value: "За бъдещи 12. клас — Общообразователна подготовка",
+  },
+  {
+    label: "За бъдещи 12. клас — Профилирана подготовка",
+    value: "За бъдещи 12. клас — Профилирана подготовка",
+  },
+  {
+    label: "Подготовка за НВО — 7. клас",
+    value: "Подготовка за НВО — 7. клас",
+  },
+  {
+    label: "Подготовка за 8., 9. и 10. клас",
+    value: "Подготовка за 8., 9. и 10. клас",
+  },
+  {
+    label: "Подготовка за кандидатстване в университет — 11. и 12. клас",
+    value: "Подготовка за кандидатстване в университет — 11. и 12. клас",
+  },
+  {
+    label: "Състезателна математика — 2., 3. и 4. клас",
+    value: "Състезателна математика — 2., 3. и 4. клас",
+  },
+];
+
+const PREFERRED_TIME_OPTIONS: Option[] = [
+  { label: "Сутрин", value: "сутрин" },
+  { label: "Следобед", value: "следобяд" },
+];
+
+const TEXT_FIELD_ROWS: TextFieldConfig[][] = [
+  [
+    { name: "firstName", label: "Име" },
+    { name: "lastName", label: "Фамилия" },
+  ],
+  [
+    { name: "phone", label: "Телефон" },
+    { name: "email", label: "Електронна поща", type: "email" },
+  ],
+];
+
+const RADIO_GROUPS: RadioGroupConfig[] = [
+  {
+    name: "studyType",
+    label: "Форма на обучение",
+    options: [
+      { label: "Група", value: "група" },
+      { label: "Индивидуално", value: "индивидуално" },
+    ],
+  },
+  {
+    name: "place",
+    label: "Място на провеждане",
+    options: [
+      { label: "Онлайн", value: "онлайн" },
+      { label: "Присъствено", value: "присъствено" },
+    ],
+  },
+];
+
+const INITIAL_FORM_STATE: FormData = {
+  firstName: "",
+  lastName: "",
+  phone: "",
+  email: "",
+  schoolClass: "",
+  course: "",
+  preferredDays: [],
+  preferredTime: [],
+  studyType: "",
+  place: "",
+  message: "",
+  termsAccepted: false,
 };
 
-type Errors = Partial<Record<keyof FormData, string>>;
-type Touched = Partial<Record<keyof FormData, boolean>>;
-
-const CLASSES = Array.from({ length: 12 }, (_, i) => 1 + i);
+const FORM_FIELDS = Object.keys(INITIAL_FORM_STATE) as FieldName[];
 
 const EMAIL_REGEX = /^\S+@\S+\.\S+$/;
 const PHONE_REGEX = /^[+\d]([\d\s-]{6,})$/;
 const NAME_REGEX = /^[A-Za-zА-Яа-я]+(-[A-Za-zА-Яа-я]+)*$/;
 
-const isBlank = (v: unknown) => String(v ?? "").trim().length === 0;
+const isBlank = (value: unknown) => String(value ?? "").trim().length === 0;
 
-const normalize = (f: FormData): FormData => ({
-  ...f,
-  firstName: f.firstName.trim(),
-  lastName: f.lastName.trim(),
-  phone: f.phone.replace(/\s+/g, " ").trim(),
-  email: f.email.trim(),
-  schoolClass: f.schoolClass.trim(),
-  studyType: f.studyType.trim(),
-  place: f.place.trim(),
-  message: f.message.trim(),
-  preferredDays: f.preferredDays.map((x) => x.trim()).filter(Boolean),
-  preferredTime: f.preferredTime.map((x) => x.trim()).filter(Boolean),
+const normalize = (form: FormData): FormData => ({
+  ...form,
+  firstName: form.firstName.trim(),
+  lastName: form.lastName.trim(),
+  phone: form.phone.replace(/\s+/g, " ").trim(),
+  email: form.email.trim(),
+  schoolClass: form.schoolClass.trim(),
+  course: form.course.trim(),
+  studyType: form.studyType.trim(),
+  place: form.place.trim(),
+  message: form.message.trim(),
+  preferredDays: form.preferredDays.map((item) => item.trim()).filter(Boolean),
+  preferredTime: form.preferredTime.map((item) => item.trim()).filter(Boolean),
 });
 
-const validate = (raw: FormData): Errors => {
-  const f = normalize(raw);
-  const e: Errors = {};
+const getAllFieldsTouched = (): Touched =>
+  FORM_FIELDS.reduce<Touched>((acc, field) => {
+    acc[field] = true;
+    return acc;
+  }, {});
 
-  if (isBlank(f.firstName)) {
-  e.firstName = "Полето е задължително.";
-} else if (!NAME_REGEX.test(f.firstName)) {
-  e.firstName = "Името може да съдържа само букви и тире (-).";
+const validateName = (
+  value: string,
+  invalidMessage: string
+): string | undefined => {
+  if (isBlank(value)) return REQUIRED_FIELD_MESSAGE;
+  if (!NAME_REGEX.test(value)) return invalidMessage;
+
+  return undefined;
+};
+
+const validate = (rawForm: FormData, isCourseSelected: boolean): Errors => {
+  const form = normalize(rawForm);
+  const errors: Errors = {};
+
+  const firstNameError = validateName(
+    form.firstName,
+    "Името може да съдържа само букви и тире (-)."
+  );
+
+  if (firstNameError) {
+    errors.firstName = firstNameError;
+  }
+
+  const lastNameError = validateName(
+    form.lastName,
+    "Фамилията може да съдържа само букви и тире (-)."
+  );
+
+  if (lastNameError) {
+    errors.lastName = lastNameError;
+  }
+
+  if (isBlank(form.phone)) {
+    errors.phone = REQUIRED_FIELD_MESSAGE;
+  } else if (!PHONE_REGEX.test(form.phone)) {
+    errors.phone = "Невалиден телефонен номер.";
+  }
+
+  if (isBlank(form.email)) {
+    errors.email = REQUIRED_FIELD_MESSAGE;
+  } else if (!EMAIL_REGEX.test(form.email)) {
+    errors.email = "Невалиден имейл адрес.";
+  }
+
+  if (isBlank(form.schoolClass)) {
+    errors.schoolClass = "Изберете клас.";
+  }
+
+  if (!isCourseSelected && form.preferredDays.length === 0) {
+    errors.preferredDays = "Изберете поне 1 ден.";
+  }
+
+  if (!isCourseSelected && form.preferredTime.length === 0) {
+    errors.preferredTime = "Изберете поне 1 време.";
+  }
+
+  if (isBlank(form.studyType)) {
+    errors.studyType = "Изберете форма на обучение.";
+  }
+
+  if (isBlank(form.place)) {
+    errors.place = "Изберете място на провеждане.";
+  }
+
+  if (!form.termsAccepted) {
+  errors.termsAccepted = "Трябва да приемете общите условия.";
 }
-
-if (isBlank(f.lastName)) {
-  e.lastName = "Полето е задължително.";
-} else if (!NAME_REGEX.test(f.lastName)) {
-  e.lastName = "Фамилията може да съдържа само букви и тире (-).";
-}
-
-  if (isBlank(f.phone)) e.phone = "Полето е задължително.";
-  else if (!PHONE_REGEX.test(f.phone)) e.phone = "Невалиден телефонен номер.";
-
-  if (isBlank(f.email)) e.email = "Полето е задължително.";
-  else if (!EMAIL_REGEX.test(f.email)) e.email = "Невалиден имейл адрес.";
-
-  if (isBlank(f.schoolClass)) e.schoolClass = "Изберете клас.";
-  if (f.preferredDays.length === 0) e.preferredDays = "Изберете поне 1 ден.";
-  if (f.preferredTime.length === 0) e.preferredTime = "Изберете поне 1 време.";
-  if (isBlank(f.studyType)) e.studyType = "Изберете форма на обучение.";
-  if (isBlank(f.place)) e.place = "Изберете място на провеждане.";
-
-  return e;
+  return errors;
 };
 
 export default function ContactForm() {
-  const [state, handleSubmit] = useForm("meoznbjv");
+  const [state, handleSubmit] = useForm(FORMSPREE_FORM_ID);
 
-  const [form, setForm] = useState<FormData>({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    schoolClass: "",
-    preferredDays: [],
-    preferredTime: [],
-    studyType: "",
-    place: "",
-    message: "",
-  });
-
+  const [form, setForm] = useState<FormData>(INITIAL_FORM_STATE);
   const [touched, setTouched] = useState<Touched>({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [isCourseSelected, setIsCourseSelected] = useState(false);
 
-  // Validate continuously, but only SHOW errors after touch/submit
-  const errors = useMemo(() => validate(form), [form]);
+  const errors = useMemo(
+    () => validate(form, isCourseSelected),
+    [form, isCourseSelected]
+  );
+
   const canSubmit = useMemo(() => Object.keys(errors).length === 0, [errors]);
 
-  const markTouched = (field: keyof FormData) => {
-    setTouched((prev) => (prev[field] ? prev : { ...prev, [field]: true }));
+  const markTouched = (field: FieldName) => {
+    setTouched((prev) => {
+      if (prev[field]) return prev;
+
+      return {
+        ...prev,
+        [field]: true,
+      };
+    });
   };
 
-  const shouldShowError = (field: keyof FormData) =>
-    !!errors[field] && (hasSubmitted || !!touched[field]);
+  const updateField = <K extends FieldName>(field: K, value: FormData[K]) => {
+    setForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
-  const fieldHelperText = (field: keyof FormData) =>
+  const handleTermsAcceptedChange = (event: ChangeEvent<HTMLInputElement>) => {
+  updateField("termsAccepted", event.target.checked);
+  markTouched("termsAccepted");
+};
+
+  const shouldShowError = (field: FieldName) =>
+    Boolean(errors[field] && (hasSubmitted || touched[field]));
+
+  const fieldHelperText = (field: FieldName) =>
     shouldShowError(field) ? errors[field] : undefined;
 
   const handleTextChange =
-    (field: keyof FormData) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const value = e.target.value;
-      setForm((prev) => ({ ...prev, [field]: value }));
+    (field: TextFieldName) =>
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      updateField(field, event.target.value);
     };
 
-  const handleTextBlur =
-    (field: keyof FormData) =>
-    () => {
+  const handleTextBlur = (field: TextFieldName) => () => {
+    markTouched(field);
+  };
+
+  const handleClassChange = (event: SelectChangeEvent) => {
+    updateField("schoolClass", event.target.value);
+    markTouched("schoolClass");
+  };
+
+  const handleCourseChange = (event: SelectChangeEvent) => {
+    const value = event.target.value;
+    const hasSelectedCourse = !isBlank(value);
+
+    setIsCourseSelected(hasSelectedCourse);
+
+    setForm((prev) => ({
+      ...prev,
+      course: value,
+      preferredDays: hasSelectedCourse ? [] : prev.preferredDays,
+      preferredTime: hasSelectedCourse ? [] : prev.preferredTime,
+    }));
+
+    markTouched("course");
+  };
+
+  const handlePreferredDaysChange = (
+    event: SelectChangeEvent<typeof form.preferredDays>
+  ) => {
+    const { value } = event.target;
+
+    updateField(
+      "preferredDays",
+      typeof value === "string" ? value.split(",") : value
+    );
+
+    markTouched("preferredDays");
+  };
+
+  const handleRadioChange =
+    (field: RadioFieldName) => (event: ChangeEvent<HTMLInputElement>) => {
+      updateField(field, event.target.value);
       markTouched(field);
     };
 
-  const handleSelectChange =
-    (field: keyof FormData) => (e: SelectChangeEvent) => {
-      setForm((prev) => ({ ...prev, [field]: e.target.value }));
-      markTouched(field);
-    };
-
-  const handlePreferredTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = e.target;
+  const handlePreferredTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = event.target;
 
     setForm((prev) => ({
       ...prev,
       preferredTime: checked
         ? [...prev.preferredTime, value]
-        : prev.preferredTime.filter((v) => v !== value),
+        : prev.preferredTime.filter((item) => item !== value),
     }));
 
     markTouched("preferredTime");
   };
 
-  const handlePreferredDaysSelect = (event: SelectChangeEvent<string[]>) => {
-    const {
-      target: { value },
-    } = event;
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-    setForm((prev) => ({
-      ...prev,
-      preferredDays: typeof value === "string" ? value.split(",") : value,
-    }));
-
-    markTouched("preferredDays");
-  };
-
-  const handleStudyTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setForm((prev) => ({ ...prev, studyType: value }));
-    markTouched("studyType");
-  };
-
-  const handlePlaceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setForm((prev) => ({ ...prev, place: value }));
-    markTouched("place");
-  };
-
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
     setHasSubmitted(true);
-
-    // Mark all fields touched so errors show after first submit attempt
-    setTouched({
-      firstName: true,
-      lastName: true,
-      phone: true,
-      email: true,
-      schoolClass: true,
-      preferredDays: true,
-      preferredTime: true,
-      studyType: true,
-      place: true,
-      message: true,
-    });
+    setTouched(getAllFieldsTouched());
 
     if (Object.keys(errors).length > 0) return;
 
     const cleaned = normalize(form);
     setForm(cleaned);
 
-    await handleSubmit(e as any);
+    await handleSubmit(event as any);
   };
+
+  const renderTextField = (field: TextFieldConfig) => (
+    <TextField
+      key={field.name}
+      fullWidth
+      label={field.label}
+      name={field.name}
+      type={field.type}
+      multiline={field.multiline}
+      minRows={field.minRows}
+      value={form[field.name]}
+      onChange={handleTextChange(field.name)}
+      onBlur={handleTextBlur(field.name)}
+      error={shouldShowError(field.name)}
+      helperText={fieldHelperText(field.name)}
+    />
+  );
+
+  const renderRadioGroup = (group: RadioGroupConfig) => (
+    <FormControl
+      key={group.name}
+      fullWidth
+      error={shouldShowError(group.name)}
+    >
+      <FormLabel>{group.label}</FormLabel>
+
+      <RadioGroup
+        row
+        name={group.name}
+        value={form[group.name]}
+        onChange={handleRadioChange(group.name)}
+        onBlur={() => markTouched(group.name)}
+      >
+        {group.options.map((option) => (
+          <FormControlLabel
+            key={option.value}
+            value={option.value}
+            control={<Radio />}
+            label={option.label}
+          />
+        ))}
+      </RadioGroup>
+
+      {shouldShowError(group.name) && (
+        <FormHelperText>{errors[group.name]}</FormHelperText>
+      )}
+    </FormControl>
+  );
 
   if (state.succeeded) {
     return (
-      <div className="p-6 text-center bg-green-100 text-green-800 rounded-md shadow">
+      <div className="rounded-md bg-green-100 p-6 text-center text-green-800 shadow">
         ✅ Успешно изпратено! Благодарим ви за интереса. Ще се свържем с вас скоро.
       </div>
     );
@@ -229,202 +457,155 @@ export default function ContactForm() {
       noValidate
       className="flex flex-col gap-4"
     >
-      {/* Row 1: Име + Фамилия */}
-      <div className="flex flex-col gap-4 md:flex-row">
-        <TextField
-          fullWidth
-          label="Име"
-          name="firstName"
-          value={form.firstName}
-          onChange={handleTextChange("firstName")}
-          onBlur={handleTextBlur("firstName")}
-          error={shouldShowError("firstName")}
-          helperText={fieldHelperText("firstName")}
-        />
+      {TEXT_FIELD_ROWS.map((row, index) => (
+        <div key={index} className="flex flex-col gap-4 md:flex-row">
+          {row.map(renderTextField)}
+        </div>
+      ))}
 
-        <TextField
-          fullWidth
-          label="Фамилия"
-          name="lastName"
-          value={form.lastName}
-          onChange={handleTextChange("lastName")}
-          onBlur={handleTextBlur("lastName")}
-          error={shouldShowError("lastName")}
-          helperText={fieldHelperText("lastName")}
-        />
-      </div>
-
-      {/* Row 2: Телефон + Имейл */}
-      <div className="flex flex-col gap-4 md:flex-row">
-        <TextField
-          fullWidth
-          label="Телефон"
-          name="phone"
-          value={form.phone}
-          onChange={handleTextChange("phone")}
-          onBlur={handleTextBlur("phone")}
-          error={shouldShowError("phone")}
-          helperText={fieldHelperText("phone")}
-        />
-
-        <TextField
-          fullWidth
-          label="Електронна поща"
-          name="email"
-          type="email"
-          value={form.email}
-          onChange={handleTextChange("email")}
-          onBlur={handleTextBlur("email")}
-          error={shouldShowError("email")}
-          helperText={fieldHelperText("email")}
-        />
-      </div>
-
-      {/* Row 3: Клас + Предпочитани дни */}
       <div className="flex flex-col gap-4 md:flex-row">
         <FormControl fullWidth error={shouldShowError("schoolClass")}>
           <InputLabel>Клас</InputLabel>
+
           <Select
             name="schoolClass"
             value={form.schoolClass}
-            onChange={handleSelectChange("schoolClass")}
+            onChange={handleClassChange}
             onClose={() => markTouched("schoolClass")}
             label="Клас"
           >
-            {CLASSES.map((cls) => (
-              <MenuItem key={cls} value={String(cls)}>
-                {cls}
+            {CLASSES.map((schoolClass) => (
+              <MenuItem key={schoolClass} value={schoolClass}>
+                {schoolClass}
               </MenuItem>
             ))}
           </Select>
+
           {shouldShowError("schoolClass") && (
             <FormHelperText>{errors.schoolClass}</FormHelperText>
           )}
         </FormControl>
 
-        <FormControl fullWidth error={shouldShowError("preferredDays")}>
-          <InputLabel>Предпочитани дни</InputLabel>
+        <FormControl fullWidth>
+          <InputLabel>Курс</InputLabel>
+
           <Select
-            multiple
-            name="preferredDays[]"
-            value={form.preferredDays}
-            onChange={handlePreferredDaysSelect}
-            onClose={() => markTouched("preferredDays")}
-            renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                {selected.map((value) => (
-                  <Chip key={value} label={value} />
-                ))}
-              </Box>
-            )}
-            label="Предпочитани дни"
+            name="course"
+            value={form.course}
+            onChange={handleCourseChange}
+            onClose={() => markTouched("course")}
+            label="Курс"
           >
-            {DAYS.map((day) => (
-              <MenuItem key={day} value={day}>
-                {day}
+            <MenuItem value="">
+              <em>Без избран курс</em>
+            </MenuItem>
+
+            {COURSE_OPTIONS.map((course) => (
+              <MenuItem key={course.value} value={course.value}>
+                {course.label}
               </MenuItem>
             ))}
           </Select>
-          {shouldShowError("preferredDays") && (
-            <FormHelperText>{errors.preferredDays}</FormHelperText>
-          )}
         </FormControl>
+
+        {!isCourseSelected && (
+          <FormControl fullWidth error={shouldShowError("preferredDays")}>
+            <InputLabel>Предпочитани дни</InputLabel>
+
+            <Select
+              multiple
+              name="preferredDays[]"
+              value={form.preferredDays}
+              onChange={handlePreferredDaysChange}
+              onClose={() => markTouched("preferredDays")}
+              renderValue={(selected) => (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+              label="Предпочитани дни"
+            >
+              {DAYS.map((day) => (
+                <MenuItem key={day} value={day}>
+                  {day}
+                </MenuItem>
+              ))}
+            </Select>
+
+            {shouldShowError("preferredDays") && (
+              <FormHelperText>{errors.preferredDays}</FormHelperText>
+            )}
+          </FormControl>
+        )}
       </div>
 
-      {/* Row 4: Форма на обучение + Място + Предпочитано време */}
       <div className="flex flex-col gap-4 md:flex-row">
-        <FormControl fullWidth error={shouldShowError("studyType")}>
-          <FormLabel>Форма на обучение</FormLabel>
-          <RadioGroup
-            row
-            name="studyType"
-            value={form.studyType}
-            onChange={handleStudyTypeChange}
-            onBlur={() => markTouched("studyType")}
-          >
-            <FormControlLabel value="група" control={<Radio />} label="Група" />
-            <FormControlLabel
-              value="индивидуално"
-              control={<Radio />}
-              label="Индивидуално"
-            />
-          </RadioGroup>
-          {shouldShowError("studyType") && (
-            <FormHelperText>{errors.studyType}</FormHelperText>
-          )}
-        </FormControl>
+        {RADIO_GROUPS.map(renderRadioGroup)}
 
-        <FormControl fullWidth error={shouldShowError("place")}>
-          <FormLabel>Място на провеждане</FormLabel>
-          <RadioGroup
-            row
-            name="place"
-            value={form.place}
-            onChange={handlePlaceChange}
-            onBlur={() => markTouched("place")}
-          >
-            <FormControlLabel value="онлайн" control={<Radio />} label="Онлайн" />
-            <FormControlLabel
-              value="присъствено"
-              control={<Radio />}
-              label="Присъствено"
-            />
-          </RadioGroup>
-          {shouldShowError("place") && (
-            <FormHelperText>{errors.place}</FormHelperText>
-          )}
-        </FormControl>
+        {!isCourseSelected && (
+          <FormControl fullWidth error={shouldShowError("preferredTime")}>
+            <FormLabel>Предпочитано време</FormLabel>
 
-        <FormControl fullWidth error={shouldShowError("preferredTime")}>
-          <FormLabel>Предпочитано време</FormLabel>
-
-          <FormControlLabel
-            control={
-              <Checkbox
-                name="preferredTime[]"
-                value="сутрин"
-                checked={form.preferredTime.includes("сутрин")}
-                onChange={handlePreferredTimeChange}
-                onBlur={() => markTouched("preferredTime")}
+            {PREFERRED_TIME_OPTIONS.map((option) => (
+              <FormControlLabel
+                key={option.value}
+                control={
+                  <Checkbox
+                    name="preferredTime[]"
+                    value={option.value}
+                    checked={form.preferredTime.includes(option.value)}
+                    onChange={handlePreferredTimeChange}
+                    onBlur={() => markTouched("preferredTime")}
+                  />
+                }
+                label={option.label}
               />
-            }
-            label="Сутрин"
-          />
+            ))}
 
-          <FormControlLabel
-            control={
-              <Checkbox
-                name="preferredTime[]"
-                value="следобяд"
-                checked={form.preferredTime.includes("следобяд")}
-                onChange={handlePreferredTimeChange}
-                onBlur={() => markTouched("preferredTime")}
-              />
-            }
-            label="Следобед"
-          />
-
-          {shouldShowError("preferredTime") && (
-            <FormHelperText>{errors.preferredTime}</FormHelperText>
-          )}
-        </FormControl>
+            {shouldShowError("preferredTime") && (
+              <FormHelperText>{errors.preferredTime}</FormHelperText>
+            )}
+          </FormControl>
+        )}
       </div>
 
-      {/* Message */}
-      <TextField
-        fullWidth
-        name="message"
-        label="Съобщение"
-        multiline
-        minRows={4}
-        value={form.message}
-        onChange={handleTextChange("message")}
-        onBlur={handleTextBlur("message")}
-        error={shouldShowError("message")}
-        helperText={fieldHelperText("message")}
-      />
+      {renderTextField({
+        name: "message",
+        label: "Съобщение",
+        multiline: true,
+        minRows: 4,
+      })}
 
-      {/* Submit Button */}
+<FormControl error={shouldShowError("termsAccepted")}>
+  <FormControlLabel
+    control={
+      <Checkbox
+        name="termsAccepted"
+        checked={form.termsAccepted}
+        onChange={handleTermsAcceptedChange}
+        onBlur={() => markTouched("termsAccepted")}
+      />
+    }
+      label={
+    <span>
+      Прочетох и приемам{" "}
+      <Link
+        to="/general-conditions"
+        target="_blank"
+        className="text-[#5F68FF] underline hover:no-underline"
+      >
+        общите условия
+      </Link>
+    </span>
+  }
+  />
+
+  {shouldShowError("termsAccepted") && (
+    <FormHelperText>{errors.termsAccepted}</FormHelperText>
+  )}
+</FormControl>
       <Button
         type="submit"
         variant="contained"
