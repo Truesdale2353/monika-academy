@@ -82,6 +82,10 @@ const DAYS = [
 const CLASSES = Array.from({ length: 12 }, (_, index) => String(index + 1));
 
 const COURSE_OPTIONS: Option[] = [
+    {
+    label: "Пробна матура по математика",
+    value: "Пробна матура по математика",
+  },
   {
     label: "За бъдещи 7. клас — Група 1",
     value: "За бъдещи 7. клас — Група 1",

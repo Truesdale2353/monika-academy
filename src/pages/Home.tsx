@@ -66,12 +66,15 @@ function Home() {
         
       </div>
           <BottomSticky>
-        <p onClick={() => setOpen(true)}>
+            <span onClick={() => setOpen(true)}>
+
+        <p >
           👋<b>Пробна матура по математика</b> 
         </p>
         <p className="text-sm">30 май | 11:30 ч. бул. „Витоша“ 104</p>
          <p className="text-sm">Реална изпитна среда, подробен анализ, обратна връзка и насоки за по-висок резултат.</p>
          <p className="text-sm">👉 Запиши се сега!</p>
+         </span>
       </BottomSticky>
       <footer id="contact" className='p-6 flex flex-col items-center gap-4 md:flex-row md:justify-evenly'>
         <Link
