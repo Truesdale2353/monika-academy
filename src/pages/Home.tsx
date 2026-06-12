@@ -4,7 +4,7 @@ import teacher from '../assets/teacher.jpg'
 import groupOne from '../assets/groupOne.jpg'
 import { useState } from 'react';
 import Link from '@mui/material/Link';
-import {BottomSticky} from '../components/BottomSticky';
+//import {BottomSticky} from '../components/BottomSticky';
 import Sections from '../Sections'
 
 
