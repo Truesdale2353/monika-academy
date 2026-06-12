@@ -65,7 +65,7 @@ function Home() {
           <Sections></Sections>
         
       </div>
-          <BottomSticky>
+          {/* <BottomSticky>
             <span onClick={() => setOpen(true)}>
 
         <p >
@@ -75,7 +75,7 @@ function Home() {
          <p className="text-sm">Реална изпитна среда, подробен анализ, обратна връзка и насоки за по-висок резултат.</p>
          <p className="text-sm">👉 Запиши се сега!</p>
          </span>
-      </BottomSticky>
+      </BottomSticky> */}
       <footer id="contact" className='p-6 flex flex-col items-center gap-4 md:flex-row md:justify-evenly'>
         <Link
           href="https://www.google.com/maps?q=Бул.+Витоша+104,+София"
