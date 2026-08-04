@@ -32,6 +32,7 @@ function Home() {
           <Box className='max-w-sm rounded-full' component='img' src={teacher} />
         </section>
         <section>
+          <span id="courses" />
           <Sections></Sections> 
         </section>
         <section>
@@ -82,7 +83,6 @@ function Home() {
           <div className='flex flex-col md:flex-row items-center gap-10'>
             <Box className='w-[256px] h-[160px] rounded-lg' component='img' src={groupOne} />
           </div >
-          <span id="courses" />
         </section>
 
     

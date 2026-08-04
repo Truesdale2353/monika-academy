@@ -4,9 +4,9 @@ export default function GeneralConditions() {
   return (
     <main className="flex w-full flex-col px-6 py-16">
       <section className="mx-auto flex w-full max-w-5xl flex-col gap-8 rounded-2xl bg-white p-6 md:p-10">
-        <Typography variant="h1" className="text-center">
-          Общи условия и политика за плащания
-        </Typography>
+        <Typography className="text-center md:text-justify" variant="h3">
+              Общи условия и политика за плащания
+            </Typography>
 
         <Typography variant="h4">1. Страни и приложимост</Typography>
         <Typography variant="body1">

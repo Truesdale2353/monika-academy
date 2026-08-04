@@ -17,13 +17,6 @@ export default function Header() {
             <li className="p-1 md:p-4">
               <Link to="/#contact">Контакти</Link>
             </li>
-            <li className="p-1 md:p-4">
-              <Link to="/#results">Резултати</Link>
-            </li>
-            {/* <li>
-              <Button variant="contained" onClick={() => setOpen(true)}>ЗАПИШИ СЕ</Button>
-            </li> */}
-
           </ul>
         </nav>
       </div>
