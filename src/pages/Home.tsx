@@ -1,11 +1,14 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, Typography } from '@mui/material';
 import ContactForm from '../contact-form/contactForm';
-import teacher from '../assets/teacher.jpg'
+import teacher from '../assets/techer2.jpg'
 import groupOne from '../assets/groupOne.jpg'
 import { useState } from 'react';
 import Link from '@mui/material/Link';
 //import {BottomSticky} from '../components/BottomSticky';
 import Sections from '../Sections'
+import FeatureStrip, { featureItems } from '../components/FeatureStrip';
+import RecommendationsSection from '../components/RecommendationsSection';
+
 
 
 function Home() {
@@ -16,11 +19,31 @@ function Home() {
       <div className="flex flex-col gap-10 px-10 items-center md:px-32">
         <section className='flex flex-col gap-6 items-center justify-center w-full md:flex-row md:justify-between md:items-start'>
           <div className='flex flex-col w-48 gap-4 items-center md:items-start'>
-            <Typography className='text-center md:text-justify' variant="h3">Овладей Математиката с Увереност</Typography>
-            <Typography className='text-center md:text-justify'> Курсове и индивидуални уроци за 1–12 клас</Typography>
+            <Typography className="text-center md:text-justify" variant="h3">
+              Математиката с
+              <span className="block text-[#5F68FF]">
+                яснота и спокойствие
+              </span>
+            </Typography>
+            <Typography className='text-center md:text-justify'>Индивидуални и групови уроци по математика за ученици от 1. до 12. клас, Подготовка за НВО, ДЗИ и прием в елитни гимназии</Typography>
             <Button variant="contained" onClick={() => setOpen(true)}>ЗАПИШИ СЕ</Button>
+
           </div>
           <Box className='max-w-sm rounded-full' component='img' src={teacher} />
+        </section>
+        <section>
+          <Sections></Sections> 
+        </section>
+        <section>
+           <FeatureStrip
+      items={featureItems}
+      decorationImage="/images/leaf-decoration.svg"
+    />
+        </section>
+        <section>
+          <RecommendationsSection
+  onCtaClick={(value) => console.log(value)}
+/>
         </section>
         <section className='flex flex-col items-center justify-between gap-10 w-full md:flex-row'>
           <div className='flex flex-col w-48 gap-4 items-center md:items-start'>
@@ -59,23 +82,13 @@ function Home() {
           <div className='flex flex-col md:flex-row items-center gap-10'>
             <Box className='w-[256px] h-[160px] rounded-lg' component='img' src={groupOne} />
           </div >
-          <span id="courses"/>
+          <span id="courses" />
         </section>
-        
-          <Sections></Sections>
-        
-      </div>
-          {/* <BottomSticky>
-            <span onClick={() => setOpen(true)}>
 
-        <p >
-          👋<b>Пробна матура по математика</b> 
-        </p>
-        <p className="text-sm">30 май | 11:30 ч. бул. „Витоша“ 104</p>
-         <p className="text-sm">Реална изпитна среда, подробен анализ, обратна връзка и насоки за по-висок резултат.</p>
-         <p className="text-sm">👉 Запиши се сега!</p>
-         </span>
-      </BottomSticky> */}
+    
+
+      </div>
+
       <footer id="contact" className='p-6 flex flex-col items-center gap-4 md:flex-row md:justify-evenly'>
         <Link
           href="https://www.google.com/maps?q=Бул.+Витоша+104,+София"
