@@ -79,7 +79,10 @@ const DAYS = [
   "Неделя",
 ];
 
-const CLASSES = [Array.from({ length: 12 }, (_, index) => String(index + 1)), "студент"];
+const CLASSES = [
+  ...Array.from({ length: 12 }, (_, index) => String(index + 1)),
+  "студент",
+];
 
 const COURSE_OPTIONS: Option[] = [
     {
