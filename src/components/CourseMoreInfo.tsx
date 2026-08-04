@@ -78,7 +78,6 @@ export default function CoursePopup({
   commonData,
   onClose,
   onPrimaryClick,
-  onSecondaryClick,
 }: CoursePopupProps) {
   if (!popup) return null;
 
