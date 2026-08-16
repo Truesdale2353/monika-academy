@@ -3,15 +3,15 @@ import {
   People as PeopleIcon,
   Person as PersonIcon,
   Language as LanguageIcon,
-  Monitor as Monitor,
+  Monitor,
   Calculate as CalculateIcon,
-  Create as Create,
+  Create,
   School,
   Groups,
   Adjust,
   EmojiEvents,
   ImportContacts,
-  DoneAll
+  DoneAll,
 } from "@mui/icons-material";
 
 export const sections: CourseSection[] = [
@@ -22,7 +22,7 @@ export const sections: CourseSection[] = [
     subtitle:
       "Малки групи от 2 до 6 ученици с фокус върху разбиране, постоянство и увереност през учебната година.",
     infoText:
-      "Скоро ще обявим график за основните групи за 4., 7. и 12. клас. За ученици от други класове също сформираме групи при заявен интерес и минимум 2 ученици със сходно ниво и цели.",
+      "Целогодишните групи са с продължителност 34 учебни седмици. Занятията са в малки групи от 2 до 6 ученици, а заплащането е предварително за минимум 4 занятия.",
     cards: [
       {
         icon: PeopleIcon,
@@ -32,7 +32,7 @@ export const sections: CourseSection[] = [
           "2 – 6 ученици",
           "1 ч. 30 мин.",
           "34 учебни седмици",
-          "График: очаква се скоро",
+          "Групови занятия",
         ],
         shortText:
           "Подкрепа за стабилна основа, по-добро разбиране и спокойна работа през учебната година.",
@@ -40,32 +40,62 @@ export const sections: CourseSection[] = [
         onClickLog: "year-round-math-4-grade",
       },
       {
-        icon: PersonIcon,
-        title: "Подготовка за НВО — 7. клас",
+        icon: School,
+        title: "Математика за 5. клас",
         price: "от 20 € / занятие",
         bulletPoints: [
           "2 – 6 ученици",
           "1 ч. 30 мин.",
           "34 учебни седмици",
-          "График: очаква се скоро",
+          "График: неделя · 11:00 – 12:30",
         ],
         shortText:
-          "Целогодишна подготовка за НВО с фокус върху задачи, стратегия и увереност за изпита.",
+          "Редовна подкрепа по математика с фокус върху разбиране, затвърждаване на знанията и повече увереност.",
+        primaryButtonText: "Научи повече",
+        onClickLog: "year-round-math-5-grade",
+      },
+      {
+        icon: Groups,
+        title: "Математика за 6. клас",
+        price: "от 20 € / занятие",
+        bulletPoints: [
+          "2 – 6 ученици",
+          "1 ч. 30 мин.",
+          "34 учебни седмици",
+          "График: събота · 13:00 – 14:30",
+        ],
+        shortText:
+          "Системна работа върху текущия материал, пропуските и изграждането на стабилна основа по математика.",
+        primaryButtonText: "Научи повече",
+        onClickLog: "year-round-math-6-grade",
+      },
+      {
+        icon: PersonIcon,
+        title: "Математика за 7. клас",
+        price: "от 20 € / занятие",
+        bulletPoints: [
+          "2 – 6 ученици",
+          "34 учебни седмици",
+          "Стандартна и разширена група",
+          "График: събота или неделя",
+        ],
+        shortText:
+          "Целогодишна подготовка с избор между стандартна и разширена група според нуждите на ученика.",
         primaryButtonText: "Научи повече",
         onClickLog: "year-round-nvo-7-grade",
       },
       {
         icon: LanguageIcon,
-        title: "Подготовка за 12. клас",
+        title: "Математика за 12. клас",
         price: "от 20 € / занятие",
         bulletPoints: [
           "2 – 6 ученици",
           "1 ч. 30 мин.",
           "34 учебни седмици",
-          "График: очаква се скоро",
+          "Общообразователна или профилирана подготовка",
         ],
         shortText:
-          "Подготовка за матура, профилирана подготовка или кандидатстване според целите на ученика.",
+          "Подготовка по математика според целите на ученика с избор между общообразователна и профилирана група.",
         primaryButtonText: "Научи повече",
         onClickLog: "year-round-exam-12-grade",
       },
@@ -87,6 +117,7 @@ export const sections: CourseSection[] = [
       },
     ],
   },
+
   {
     id: "summer-courses",
     label: "Летни курсове",
@@ -180,6 +211,7 @@ export const sections: CourseSection[] = [
       },
     ],
   },
+
   {
     id: "individual-lessons",
     label: "Индивидуални уроци",
